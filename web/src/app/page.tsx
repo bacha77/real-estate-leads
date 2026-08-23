@@ -75,11 +75,7 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("https://bright-seals-move.loca.lt/api/leads", {
-      headers: {
-        "Bypass-Tunnel-Reminder": "true"
-      }
-    })
+    fetch("data/leads.json")
       .then(res => res.json())
       .then(data => {
         setLeads(data.leads || []);
