@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+playwright
+schedule
+beautifulsoup4
+pandas
+requests
+python-dotenv

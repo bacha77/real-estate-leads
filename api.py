@@ -1,9 +1,27 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 import sqlite3
 import os
+import threading
+import schedule
+import time
 
-app = FastAPI(title="Real Estate Lead Generator API")
+def run_scheduler_loop():
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # This registers the schedule by importing
+    import scheduler
+    # Start the background thread
+    thread = threading.Thread(target=run_scheduler_loop, daemon=True)
+    thread.start()
+    yield
+
+app = FastAPI(title="Real Estate Lead Generator API", lifespan=lifespan)
 
 # Enable CORS for the Next.js frontend
 app.add_middleware(
