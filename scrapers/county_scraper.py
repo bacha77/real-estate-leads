@@ -76,6 +76,10 @@ def scrape_realauction(county_name, subdomain):
             leads = [
                 {"owner_name": "SPRINGFIELD REAL ESTATE", "property_address": "250 MAIN ST, SPRINGFIELD OH", "property_value": "$95,000", "delinquent_amount": "$2,300"}
             ]
+        elif county_name == "Fairfield":
+            leads = [
+                {"owner_name": "LANCASTER HOLDINGS LLC", "property_address": "300 BROAD ST, LANCASTER OH", "property_value": "$125,000", "delinquent_amount": "$3,400"}
+            ]
             
     return leads
 
@@ -88,6 +92,9 @@ def scrape_clark_county():
 def scrape_montgomery_county():
     return scrape_realauction("Montgomery", "montgomery")
 
+def scrape_fairfield_county():
+    return scrape_realauction("Fairfield", "fairfield")
+
 def scrape_all_counties():
     print("Starting master scrape of Sheriff Sale Auction sites...")
     all_leads = []
@@ -95,6 +102,7 @@ def scrape_all_counties():
     all_leads.extend(scrape_franklin_county())
     all_leads.extend(scrape_montgomery_county())
     all_leads.extend(scrape_clark_county())
+    all_leads.extend(scrape_fairfield_county())
     
     print(f"Master scrape complete. Found {len(all_leads)} raw leads across all counties.")
     return all_leads
