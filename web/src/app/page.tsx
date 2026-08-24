@@ -73,6 +73,7 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
   const [leads, setLeads] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [activeTab, setActiveTab] = useState("Live Leads");
 
   useEffect(() => {
     fetch("data/leads.json")
@@ -107,18 +108,27 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
         </div>
         
         <nav className="flex-1 space-y-2">
-          <a href="#" className="flex items-center gap-3 bg-blue-600/10 text-blue-400 px-4 py-3 rounded-xl font-medium border border-blue-500/20">
+          <button 
+            onClick={() => setActiveTab("Live Leads")}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${activeTab === "Live Leads" ? "bg-blue-600/10 text-blue-400 border border-blue-500/20" : "text-slate-400 hover:text-white hover:bg-white/5"}`}
+          >
             <Activity className="w-5 h-5" />
             Live Leads
-          </a>
-          <a href="#" className="flex items-center gap-3 text-slate-400 hover:text-white px-4 py-3 rounded-xl font-medium transition-colors hover:bg-white/5">
+          </button>
+          <button 
+            onClick={() => setActiveTab("Campaigns")}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${activeTab === "Campaigns" ? "bg-blue-600/10 text-blue-400 border border-blue-500/20" : "text-slate-400 hover:text-white hover:bg-white/5"}`}
+          >
             <ChevronRight className="w-5 h-5" />
             Campaigns
-          </a>
-          <a href="#" className="flex items-center gap-3 text-slate-400 hover:text-white px-4 py-3 rounded-xl font-medium transition-colors hover:bg-white/5">
+          </button>
+          <button 
+            onClick={() => setActiveTab("Settings")}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${activeTab === "Settings" ? "bg-blue-600/10 text-blue-400 border border-blue-500/20" : "text-slate-400 hover:text-white hover:bg-white/5"}`}
+          >
             <ChevronRight className="w-5 h-5" />
             Settings
-          </a>
+          </button>
         </nav>
         
         <button onClick={onLogout} className="flex items-center gap-3 text-slate-500 hover:text-red-400 mt-auto px-4 py-3 font-medium transition-colors">
@@ -129,111 +139,175 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
 
       {/* Main Content */}
       <div className="flex-1 p-8 overflow-y-auto">
-        <header className="mb-8 flex justify-between items-center">
-          <div>
-            <h2 className="text-2xl font-bold text-white">Pre-Foreclosure Leads</h2>
-            <p className="text-slate-400 text-sm mt-1">Real-time distressed property data</p>
-          </div>
-          <div className="relative">
-            <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
-            <input 
-              type="text" 
-              placeholder="Search owners or addresses..." 
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-blue-500 w-64 transition-all"
-            />
-          </div>
-        </header>
+        {activeTab === "Settings" ? (
+          <div className="max-w-3xl">
+            <header className="mb-8">
+              <h2 className="text-2xl font-bold text-white">Settings</h2>
+              <p className="text-slate-400 text-sm mt-1">Manage your workspace preferences and integrations.</p>
+            </header>
 
-        {/* Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-all"></div>
-            <p className="text-slate-400 text-sm font-medium">Total Properties Found</p>
-            <p className="text-3xl font-bold text-white mt-2">{leads.length}</p>
-          </div>
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-emerald-500/20 transition-all"></div>
-            <p className="text-slate-400 text-sm font-medium">Verified Phone Numbers</p>
-            <p className="text-3xl font-bold text-white mt-2">{validPhones}</p>
-          </div>
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-purple-500/20 transition-all"></div>
-            <p className="text-slate-400 text-sm font-medium">Skip-Trace Match Rate</p>
-            <p className="text-3xl font-bold text-white mt-2">{matchRate}%</p>
-          </div>
-        </div>
+            <div className="space-y-6">
+              {/* API Keys */}
+              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-blue-400" />
+                  Skip-Tracing API Keys
+                </h3>
+                <p className="text-sm text-slate-400 mb-6">Connect your TruePeopleSearch API to automatically resolve owner phone numbers and emails.</p>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">TruePeopleSearch API Key</label>
+                    <input 
+                      type="password" 
+                      placeholder="sk_live_..................." 
+                      className="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-slate-600"
+                    />
+                  </div>
+                  <button className="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-2 rounded-lg transition-colors">
+                    Save API Key
+                  </button>
+                </div>
+              </div>
 
-        {/* Table */}
-        <div className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden shadow-xl">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-white/5 bg-white/[0.02]">
-                  <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Owner</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Property</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Value</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Contact</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {loading ? (
-                  <tr>
-                    <td colSpan={4} className="px-6 py-8 text-center text-slate-500">Loading live data...</td>
-                  </tr>
-                ) : filteredLeads.length === 0 ? (
-                  <tr>
-                    <td colSpan={4} className="px-6 py-8 text-center text-slate-500">No properties found.</td>
-                  </tr>
-                ) : (
-                  filteredLeads.map((lead, idx) => (
-                    <tr key={idx} className="hover:bg-white/[0.02] transition-colors group">
-                      <td className="px-6 py-4">
-                        <div className="font-medium text-white">{lead.owner_name}</div>
-                        <div className="text-xs text-slate-500 mt-1">ID: {lead.id}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-start gap-2">
-                          <MapPin className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
-                          <div>
-                            <div className="text-slate-200">{lead.property_address}</div>
-                            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lead.property_address)}`} target="_blank" className="text-xs text-blue-400 hover:text-blue-300 transition-colors">
-                              View on Map
-                            </a>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
-                          <DollarSign className="w-4 h-4" />
-                          {lead.property_value}
-                        </div>
-                        <div className="text-xs text-slate-500 mt-1">Delinquent: {lead.delinquent_amount}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2 text-sm">
-                            <Phone className="w-3.5 h-3.5 text-slate-500" />
-                            <span className={lead.phone_1 && lead.phone_1 !== 'Not found' ? 'text-slate-300' : 'text-slate-600'}>
-                              {lead.phone_1 || 'Not found'}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm">
-                            <Mail className="w-3.5 h-3.5 text-slate-500" />
-                            <span className={lead.email && lead.email !== 'Not found' ? 'text-slate-300' : 'text-slate-600'}>
-                              {lead.email || 'Not found'}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
+              {/* Target Counties */}
+              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-emerald-400" />
+                  Target Counties
+                </h3>
+                <p className="text-sm text-slate-400 mb-6">These are the Ohio counties your Serverless pipeline scans every night at 2:00 AM.</p>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-black/30 border border-white/5 rounded-lg p-4 flex items-center justify-between">
+                    <span className="text-white font-medium">Franklin County</span>
+                    <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md">Active</span>
+                  </div>
+                  <div className="bg-black/30 border border-white/5 rounded-lg p-4 flex items-center justify-between">
+                    <span className="text-white font-medium">Montgomery County</span>
+                    <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md">Active</span>
+                  </div>
+                  <div className="bg-black/30 border border-white/5 rounded-lg p-4 flex items-center justify-between">
+                    <span className="text-white font-medium">Clark County</span>
+                    <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md">Active</span>
+                  </div>
+                  <div className="bg-black/30 border border-white/5 rounded-lg p-4 flex items-center justify-between">
+                    <span className="text-white font-medium">Fairfield County</span>
+                    <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md">Active</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            <header className="mb-8 flex justify-between items-center">
+              <div>
+                <h2 className="text-2xl font-bold text-white">Pre-Foreclosure Leads</h2>
+                <p className="text-slate-400 text-sm mt-1">Real-time distressed property data</p>
+              </div>
+              <div className="relative">
+                <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                <input 
+                  type="text" 
+                  placeholder="Search owners or addresses..." 
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  className="pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-blue-500 w-64 transition-all"
+                />
+              </div>
+            </header>
+
+            {/* Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-all"></div>
+                <p className="text-slate-400 text-sm font-medium">Total Properties Found</p>
+                <p className="text-3xl font-bold text-white mt-2">{leads.length}</p>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-emerald-500/20 transition-all"></div>
+                <p className="text-slate-400 text-sm font-medium">Verified Phone Numbers</p>
+                <p className="text-3xl font-bold text-white mt-2">{validPhones}</p>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-purple-500/20 transition-all"></div>
+                <p className="text-slate-400 text-sm font-medium">Skip-Trace Match Rate</p>
+                <p className="text-3xl font-bold text-white mt-2">{matchRate}%</p>
+              </div>
+            </div>
+
+            {/* Table */}
+            <div className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden shadow-xl">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-white/5 bg-white/[0.02]">
+                      <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Owner</th>
+                      <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Property</th>
+                      <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Value</th>
+                      <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Contact</th>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {loading ? (
+                      <tr>
+                        <td colSpan={4} className="px-6 py-8 text-center text-slate-500">Loading live data...</td>
+                      </tr>
+                    ) : filteredLeads.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="px-6 py-8 text-center text-slate-500">No properties found.</td>
+                      </tr>
+                    ) : (
+                      filteredLeads.map((lead, idx) => (
+                        <tr key={idx} className="hover:bg-white/[0.02] transition-colors group">
+                          <td className="px-6 py-4">
+                            <div className="font-medium text-white">{lead.owner_name}</div>
+                            <div className="text-xs text-slate-500 mt-1">ID: {lead.id}</div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-start gap-2">
+                              <MapPin className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+                              <div>
+                                <div className="text-slate-200">{lead.property_address}</div>
+                                <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lead.property_address)}`} target="_blank" className="text-xs text-blue-400 hover:text-blue-300 transition-colors">
+                                  View on Map
+                                </a>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
+                              <DollarSign className="w-4 h-4" />
+                              {lead.property_value}
+                            </div>
+                            <div className="text-xs text-slate-500 mt-1">Delinquent: {lead.delinquent_amount}</div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2 text-sm">
+                                <Phone className="w-3.5 h-3.5 text-slate-500" />
+                                <span className={lead.phone_1 && lead.phone_1 !== 'Not found' ? 'text-slate-300' : 'text-slate-600'}>
+                                  {lead.phone_1 || 'Not found'}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 text-sm">
+                                <Mail className="w-3.5 h-3.5 text-slate-500" />
+                                <span className={lead.email && lead.email !== 'Not found' ? 'text-slate-300' : 'text-slate-600'}>
+                                  {lead.email || 'Not found'}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
