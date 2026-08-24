@@ -1,2 +1,2 @@
-:HL["/real-estate-leads/_next/static/chunks/3s2oq8w26x_0-.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"6xnN3-qj1HmZmWYAF23YA"}
+:HL["/real-estate-leads/_next/static/chunks/2a8mbj14zzrk_.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"sIcUT4rqGMnH1oFtkuylF"}
