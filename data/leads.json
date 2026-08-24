@@ -2,37 +2,37 @@
   "leads": [
     {
       "id": 4,
-      "owner_name": "SPRINGFIELD REAL ESTATE",
+      "owner_name": "SPRINGFIELD REAL ESTATE INC",
       "property_address": "250 MAIN ST, SPRINGFIELD OH",
       "property_value": "$95,000",
-      "delinquent_amount": "$2,300",
+      "delinquent_amount": "Unknown",
       "phone_1": "Not found",
       "email": "Not found"
     },
     {
       "id": 3,
-      "owner_name": "JOHNSON, MICHAEL",
-      "property_address": "456 ELM ST, DAYTON OH",
-      "property_value": "$95,000",
-      "delinquent_amount": "$1,100",
+      "owner_name": "DAYTON HOMES LLC",
+      "property_address": "850 OAKWOOD AVE, DAYTON OH",
+      "property_value": "$89,500",
+      "delinquent_amount": "Unknown",
       "phone_1": "Not found",
       "email": "Not found"
     },
     {
       "id": 2,
-      "owner_name": "WILLIAMS INVESTMENTS LLC",
-      "property_address": "789 MAPLE AVE, DAYTON OH",
-      "property_value": "$150,000",
-      "delinquent_amount": "$4,200",
+      "owner_name": "MONTGOMERY, JOHN",
+      "property_address": "500 SPRINGFIELD ST, DAYTON OH",
+      "property_value": "$115,000",
+      "delinquent_amount": "Unknown",
       "phone_1": "Not found",
       "email": "Not found"
     },
     {
       "id": 1,
-      "owner_name": "COLUMBUS HOLDINGS INC",
+      "owner_name": "OHIO STATE PROPERTIES LLC",
       "property_address": "100 HIGH ST, COLUMBUS OH",
       "property_value": "$245,000",
-      "delinquent_amount": "$8,500",
+      "delinquent_amount": "Unknown",
       "phone_1": "Not found",
       "email": "Not found"
     }
