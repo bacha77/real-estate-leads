@@ -6,8 +6,8 @@
       "property_address": "300 BROAD ST, LANCASTER OH",
       "property_value": "$125,000",
       "delinquent_amount": "$3,400",
-      "phone_1": "Not found",
-      "email": "Not found"
+      "phone_1": "API Error",
+      "email": "API Error"
     },
     {
       "id": 4,
@@ -15,8 +15,8 @@
       "property_address": "250 MAIN ST, SPRINGFIELD OH",
       "property_value": "$95,000",
       "delinquent_amount": "$2,300",
-      "phone_1": "Not found",
-      "email": "Not found"
+      "phone_1": "API Error",
+      "email": "API Error"
     },
     {
       "id": 3,
@@ -24,8 +24,8 @@
       "property_address": "456 ELM ST, DAYTON OH",
       "property_value": "$95,000",
       "delinquent_amount": "$1,100",
-      "phone_1": "Not found",
-      "email": "Not found"
+      "phone_1": "API Error",
+      "email": "API Error"
     },
     {
       "id": 2,
@@ -33,8 +33,8 @@
       "property_address": "789 MAPLE AVE, DAYTON OH",
       "property_value": "$150,000",
       "delinquent_amount": "$4,200",
-      "phone_1": "Not found",
-      "email": "Not found"
+      "phone_1": "API Error",
+      "email": "API Error"
     },
     {
       "id": 1,
@@ -42,8 +42,8 @@
       "property_address": "100 HIGH ST, COLUMBUS OH",
       "property_value": "$245,000",
       "delinquent_amount": "$8,500",
-      "phone_1": "Not found",
-      "email": "Not found"
+      "phone_1": "API Error",
+      "email": "API Error"
     }
   ]
 }
